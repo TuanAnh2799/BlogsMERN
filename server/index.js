@@ -9,8 +9,8 @@ const PORT = process.env.port || 5000;
 
 const URI ='mongodb+srv://admin:khongcomatkhau@clusterta.djcrj.mongodb.net/myBlogs?retryWrites=true&w=majority';
 
-app.use(bodyParser.json({limit: '30mb'}));
-app.use(bodyParser.urlencoded({extended: true, limit: '30mb'}));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 app.use(cors());
 
 app.use('/posts', posts);

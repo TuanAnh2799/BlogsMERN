@@ -4,7 +4,7 @@ export const getPosts = async(req, res)=> {
     try {
 
         const posts = await PostModel.find();  // return all posts
-        console.log('posts:', posts);
+        //console.log('posts:', posts);
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({err : error});
@@ -32,6 +32,15 @@ export const updatePost =async(req, res)=> {
         const post = await PostModel.findOneAndUpdate({ _id: updatePost._id}, updatePost, {new: true}); // new = true sẽ lấy lại data mới sau khi update
         res.status(200).json(post);
 
+    } catch (error) {
+        res.status(500).json({err : error});
+    }
+}
+
+export const deletePost = async(req , res) => {
+    try {
+        await PostModel.findByIdAndDelete(req._id);
+        res.status(200);
     } catch (error) {
         res.status(500).json({err : error});
     }

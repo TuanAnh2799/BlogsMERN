@@ -4,7 +4,7 @@ import React,{memo} from 'react'
 const TestMemoScreen = ({onIncrease}) => {
     console.log('reRender screen test memo.');
   return (
-    <View style={{width:'50%', height: 60}}>
+    <View style={{width:'50%', height: 60, backgroundColor:'red'}}>
       <Text>Test memo Screen</Text>
       <Button title='Cộng' onPress={()=>onIncrease()}/>
      

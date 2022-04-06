@@ -2,18 +2,35 @@ export const SEND_REQUEST_GET_POSTS = "SEND_REQUEST_GET_POSTS";
 export const SEND_REQUEST_GET_POSTS_SUCCESS = "SEND_REQUEST_GET_POSTS_SUCCESS";
 export const SEND_REQUEST_GET_POSTS_FAILED = "SEND_REQUEST_GET_POSTS_FAILED";
 
-export const SEND_REQUEST_GET_A_COMMENT = "SEND_REQUEST_GET_A_COMMENT";
-export const SEND_REQUEST_GET_A_COMMENT_SUCCESS = "SEND_REQUEST_GET_A_COMMENT_SUCCESS";
-export const SEND_REQUEST_GET_A_COMMENT_FAILED = "SEND_REQUEST_GET_A_COMMENT_FAILED";
+export const SEND_REQUEST_CREATE_POST = "SEND_REQUEST_CREATE_POST";
+export const SEND_REQUEST_CREATE_POST_SUCCESS = "SEND_REQUEST_CREATE_POST_SUCCESS";
+export const SEND_REQUEST_CREATE_POST_FAILED = "SEND_REQUEST_CREATE_POST_FAILED";
 
+export const SEND_REQUEST_UPDATE_POST = "SEND_REQUEST_UPDATE_POST";
+export const SEND_REQUEST_UPDATE_POST_SUCCESS = "SEND_REQUEST_UPDATE_POST_SUCCESS";
+export const SEND_REQUEST_UPDATE_POST_FAILED = "SEND_REQUEST_UPDATE_POST_FAILED";
+
+export const SEND_REQUEST_DELETE_POST = "SEND_REQUEST_DELETE_POST";
+export const SEND_REQUEST_DELETE_POST_SUCCESS = "SEND_REQUEST_DELETE_POST_SUCCESS";
+export const SEND_REQUEST_DELETE_POST_FAILED = "SEND_REQUEST_DELETE_POST_FAILED";
 
 const initialState = {
     posts: [],
     //comment: [],
     isLoading: false,
     isError: false,
-    // _A_Comment_Loaing: false,
-    // _A_CmtError: false,
+
+    createLoading: false,
+    createError: false,
+    createPostSuccess: false,
+
+    updateLoading: false,
+    updateError: false,
+    updatePostSuccess: false,
+
+    deleteSuccess: false,
+    deleteLoading: false,
+    deleteError: false,
 }
 
 
@@ -37,24 +54,71 @@ export default function postReducer (state = initialState, payload) {
                 isError: true
             }
 
+        case SEND_REQUEST_CREATE_POST: 
+            return {
+                ...state,
+                createLoading: true,
+                createError: false,
+                createPostSuccess: false,
+            }
+        case SEND_REQUEST_CREATE_POST_SUCCESS: 
+            return {
+                ...state,
+                posts: [...state.posts,payload.post],
+                createLoading: false,
+                createError: false,
+                createPostSuccess: true,
+            }
+        case SEND_REQUEST_CREATE_POST_FAILED: 
+            return {
+                ...state,
+                createLoading: false,
+                createError: true,
+                createPostSuccess: false,
+            }
 
-        // case SEND_REQUEST_GET_A_COMMENT: 
-        //     return {
-        //         ...state,
-        //         _A_Comment_Loaing: true,
-        //     }
-        // case SEND_REQUEST_GET_A_COMMENT_SUCCESS: 
-        //     return {
-        //         ...state,
-        //         comment: payload.comment,
-        //         _A_Comment_Loaing: false,
-        //     }
-        // case SEND_REQUEST_GET_A_COMMENT_FAILED: 
-        //     return {
-        //         ...state,
-        //         _A_Comment_Loaing: false,
-        //         _A_CmtError: true,
-        //     }
+
+            //update post
+        case SEND_REQUEST_UPDATE_POST: 
+            return {
+                ...state,
+                updateLoading: true,
+            }
+        case SEND_REQUEST_UPDATE_POST_SUCCESS: 
+            return {
+                ...state,
+                posts: state.posts.map(post => post._id === payload.post._id ? payload.post : post),
+                updateLoading: false,
+                updateError: false,
+                updatePostSuccess: true,
+            }
+        case SEND_REQUEST_UPDATE_POST_FAILED: 
+            return {
+                ...state,
+                updateLoading: false,
+                updateError: true,
+                updatePostSuccess: false,
+            }
+        
+            ///delete post
+        case SEND_REQUEST_DELETE_POST:
+            return {
+                ...state,
+                deleteLoading: true,
+                deleteError: false,
+            }
+
+        case SEND_REQUEST_DELETE_POST_SUCCESS:
+            return {
+                ...state,
+                deleteLoading: true,
+                posts: state.posts.filter(e => {
+                    return e._id !== payload.post._id
+                }),
+                deleteError: false,
+            }
+
+
         default:
             return state
     }

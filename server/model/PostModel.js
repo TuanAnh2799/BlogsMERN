@@ -14,10 +14,15 @@ const schema = new mongoo.Schema({
         required: true,
         default: 'Tuấn Anh'
     },
-    attackment: String,
+    attackment: {
+        type: String,
+        required: false,
+        default: '',
+    },
     likeCount: {
         type: Number,
-        default: 0
+        required: true,
+        default: 0,
     },
 }, {
     timestamps: true
