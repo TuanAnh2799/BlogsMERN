@@ -2,6 +2,7 @@ import express  from "express";
 import bodyParser from "body-parser";
 import cors from 'cors';
 import posts from './routers/posts.js';
+import notificationRouter from './routers/notification.js';
 import mongoo from 'mongoose';
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 app.use(cors());
 
 app.use('/posts', posts);
+app.use('/notification', notificationRouter);
 
 
 mongoo.connect(URI, { 
